@@ -1,8 +1,24 @@
-
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { ErrorBoundary } from './components/ErrorBoundary';
+
+/**
+ * إعداد بيئة التشغيل لـ Vite:
+ * نقوم بجلب المفتاح من import.meta.env (الخاص بـ Vite) 
+ * ونضعه في process.env.API_KEY ليتوافق مع متطلبات محرك Gemini.
+ */
+if (typeof (window as any).process === 'undefined') {
+  (window as any).process = { env: {} };
+}
+
+// قراءة المفتاح من ملف .env
+const viteKey = (import.meta as any).env?.VITE_API_KEY;
+
+if (viteKey) {
+  // حقن المفتاح في المكان الذي يتوقعه محرك Gemini
+  process.env.API_KEY = viteKey;
+}
 
 const rootElement = document.getElementById('root');
 
@@ -13,11 +29,10 @@ if (!rootElement) {
 const root = ReactDOM.createRoot(rootElement);
 
 /**
- * التحقق من وجود مفتاح الـ API.
- * نقوم بالتحقق من الاسم القياسي (API_KEY) والاسم الذي استخدمته (VITE_ALWASEET)
+ * التحقق النهائي قبل عرض التطبيق
  */
-const apiKey = process.env.API_KEY || (process.env as any).VITE_ALWASEET;
-const isApiKeyMissing = !apiKey || apiKey === 'undefined' || apiKey === '';
+const apiKey = process.env.API_KEY;
+const isApiKeyMissing = !apiKey || apiKey === 'undefined' || apiKey.includes('PLACEHOLDER');
 
 root.render(
   <React.StrictMode>
@@ -28,16 +43,9 @@ root.render(
           position: 'fixed', bottom: '0', left: '0', right: '0', zIndex: 99999,
           background: '#dc2626', color: 'white', padding: '10px 20px',
           textAlign: 'center', fontSize: '12px', fontWeight: 'bold',
-          boxShadow: '0 -4px 15px rgba(0,0,0,0.2)', direction: 'rtl', fontFamily: 'sans-serif',
-          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px'
+          direction: 'rtl', fontFamily: 'sans-serif'
         }}>
-          <span>⚠️ نظام الذكاء الاصطناعي معطل. يرجى التأكد من إضافة المفتاح في Netlify باسم <b>API_KEY</b> أو <b>VITE_ALWASEET</b>.</span>
-          <button 
-            onClick={() => window.location.reload()} 
-            style={{ background: 'white', color: '#dc2626', border: 'none', padding: '2px 10px', borderRadius: '4px', cursor: 'pointer', fontSize: '10px' }}
-          >
-            تحديث الصفحة
-          </button>
+          ⚠️ تنبيه: نظام الذكاء الاصطناعي يتطلب مفتاح Gemini صالح في ملف .env ليعمل البوت وفحص الصور.
         </div>
       )}
     </ErrorBoundary>
