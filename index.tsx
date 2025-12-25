@@ -4,15 +4,6 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import { ErrorBoundary } from './components/ErrorBoundary';
 
-/**
- * معالجة بيئة التشغيل:
- * إذا كان المستخدم قد أعد المفتاح باسم VITE_ALWASEET في Netlify، 
- * نقوم بنقله إلى process.env.API_KEY ليعمل الكود بشكل قياسي.
- */
-if (!process.env.API_KEY && (process.env as any).VITE_ALWASEET) {
-  (process.env as any).API_KEY = (process.env as any).VITE_ALWASEET;
-}
-
 const rootElement = document.getElementById('root');
 
 if (!rootElement) {
@@ -22,9 +13,10 @@ if (!rootElement) {
 const root = ReactDOM.createRoot(rootElement);
 
 /**
- * التحقق من وجود مفتاح الـ API بعد المعالجة.
+ * التحقق من وجود مفتاح الـ API.
+ * نقوم بالتحقق من الاسم القياسي (API_KEY) والاسم الذي استخدمته (VITE_ALWASEET)
  */
-const apiKey = process.env.API_KEY;
+const apiKey = process.env.API_KEY || (process.env as any).VITE_ALWASEET;
 const isApiKeyMissing = !apiKey || apiKey === 'undefined' || apiKey === '';
 
 root.render(
@@ -39,7 +31,7 @@ root.render(
           boxShadow: '0 -4px 15px rgba(0,0,0,0.2)', direction: 'rtl', fontFamily: 'sans-serif',
           display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px'
         }}>
-          <span>⚠️ نظام الذكاء الاصطناعي معطل. يرجى التأكد من إضافة المفتاح في Netlify باسم <b>API_KEY</b>.</span>
+          <span>⚠️ نظام الذكاء الاصطناعي معطل. يرجى التأكد من إضافة المفتاح في Netlify باسم <b>API_KEY</b> أو <b>VITE_ALWASEET</b>.</span>
           <button 
             onClick={() => window.location.reload()} 
             style={{ background: 'white', color: '#dc2626', border: 'none', padding: '2px 10px', borderRadius: '4px', cursor: 'pointer', fontSize: '10px' }}
