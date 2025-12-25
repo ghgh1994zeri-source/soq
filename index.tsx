@@ -4,6 +4,15 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import { ErrorBoundary } from './components/ErrorBoundary';
 
+/**
+ * معالجة بيئة التشغيل:
+ * إذا كان المستخدم قد أعد المفتاح باسم VITE_ALWASEET في Netlify، 
+ * نقوم بنقله إلى process.env.API_KEY ليعمل الكود بشكل قياسي.
+ */
+if (!process.env.API_KEY && (process.env as any).VITE_ALWASEET) {
+  (process.env as any).API_KEY = (process.env as any).VITE_ALWASEET;
+}
+
 const rootElement = document.getElementById('root');
 
 if (!rootElement) {
@@ -13,12 +22,10 @@ if (!rootElement) {
 const root = ReactDOM.createRoot(rootElement);
 
 /**
- * التحقق من وجود مفتاح الـ API.
- * ملاحظة: في بيئة الإنتاج على Netlify، يتم حقن هذا المفتاح تلقائياً 
- * فقط إذا تم تعريف المتغير 'API_KEY' في إعدادات الموقع.
+ * التحقق من وجود مفتاح الـ API بعد المعالجة.
  */
 const apiKey = process.env.API_KEY;
-const isApiKeyMissing = !apiKey || apiKey === 'undefined';
+const isApiKeyMissing = !apiKey || apiKey === 'undefined' || apiKey === '';
 
 root.render(
   <React.StrictMode>
@@ -27,11 +34,18 @@ root.render(
       {isApiKeyMissing && (
         <div style={{
           position: 'fixed', bottom: '0', left: '0', right: '0', zIndex: 99999,
-          background: '#ef4444', color: 'white', padding: '12px',
+          background: '#dc2626', color: 'white', padding: '10px 20px',
           textAlign: 'center', fontSize: '12px', fontWeight: 'bold',
-          boxShadow: '0 -4px 20px rgba(0,0,0,0.3)', direction: 'rtl', fontFamily: 'sans-serif'
+          boxShadow: '0 -4px 15px rgba(0,0,0,0.2)', direction: 'rtl', fontFamily: 'sans-serif',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px'
         }}>
-          ⚠️ تنبيه للنظام: مفتاح الـ API غير متاح حالياً في بيئة التشغيل. يرجى إضافته كـ (API_KEY) في لوحة تحكم Netlify.
+          <span>⚠️ نظام الذكاء الاصطناعي معطل. يرجى التأكد من إضافة المفتاح في Netlify باسم <b>API_KEY</b>.</span>
+          <button 
+            onClick={() => window.location.reload()} 
+            style={{ background: 'white', color: '#dc2626', border: 'none', padding: '2px 10px', borderRadius: '4px', cursor: 'pointer', fontSize: '10px' }}
+          >
+            تحديث الصفحة
+          </button>
         </div>
       )}
     </ErrorBoundary>
