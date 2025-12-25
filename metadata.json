@@ -1,0 +1,10 @@
+
+{
+  "name": "الوسيط برو - سوريا",
+  "description": "أكبر منصة تجارة إلكترونية ذكية في سوريا مدعومة بتقنيات Gemini 2.5 و 3.0",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ]
+}

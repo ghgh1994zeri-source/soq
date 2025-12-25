@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="application-name" content="الوسيط">
+    <meta name="theme-color" content="#002f34" />
+    
+    <link rel="apple-touch-icon" href="https://i.ibb.co/27Qv2BfV/Screenshot-2025-12-09-142509.png">
+    
+    <meta name="description" content="الوسيط - أكبر سوق مفتوح في سوريا. سيارات، عقارات دمشق وحلب، إلكترونيات، وتراثيات. بيع واشتري ببساطة وبدون وسيط." />
+    <meta name="keywords" content="الوسيط سوريا, سيارات للبيع, عقارات دمشق, سوق المستعمل, موبايلات مستعملة, وظائف سوريا, سوق الهال الرقمي" />
+    <meta name="author" content="Al-Waseet Syria" />
+
+    <title>الوسيط - سوريا | سوقك المفتوح</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Cairo', 'sans-serif'],
+            },
+            colors: {
+              primary: '#002f34', 
+              secondary: '#c59d5f', 
+              accent: '#f1c40f', 
+              customGray: '#f8f9fa',
+              darkBg: '#0f172a', 
+              darkCard: '#1e293b', 
+            },
+            animation: {
+              'slide-down': 'slideDown 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+              'slide-up': 'slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+              'fade-in': 'fadeIn 0.6s ease-out forwards',
+              'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'slide-in-right': 'slideInRight 0.4s ease-out forwards',
+              'float': 'float 6s ease-in-out infinite',
+              'hover-lift': 'hoverLift 0.3s ease-out forwards',
+              'text-reveal': 'textReveal 1s cubic-bezier(0.77, 0, 0.175, 1) forwards',
+              'wave': 'wave 1.2s linear infinite',
+            },
+            keyframes: {
+              slideDown: {
+                '0%': { transform: 'translateY(-20px)', opacity: '0' },
+                '100%': { transform: 'translateY(0)', opacity: '1' },
+              },
+              slideUp: {
+                '0%': { transform: 'translateY(30px)', opacity: '0' },
+                '100%': { transform: 'translateY(0)', opacity: '1' },
+              },
+              fadeIn: {
+                '0%': { opacity: '0', transform: 'scale(0.95)' },
+                '100%': { opacity: '1', transform: 'scale(1)' },
+              },
+              slideInRight: {
+                '0%': { transform: 'translateX(100%)' },
+                '100%': { transform: 'translateX(0)' },
+              },
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-10px)' },
+              },
+              hoverLift: {
+                '0%': { transform: 'translateY(0)' },
+                '100%': { transform: 'translateY(-8px)' },
+              },
+              textReveal: {
+                '0%': { transform: 'translateY(100%)', opacity: '0' },
+                '100%': { transform: 'translateY(0)', opacity: '1' },
+              },
+              wave: {
+                '0%, 100%': { height: '10%' },
+                '50%': { height: '100%' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 80px; 
+        -webkit-tap-highlight-color: transparent;
+        text-rendering: optimizeLegibility;
+      }
+      body {
+        -webkit-overflow-scrolling: touch;
+        background-color: #f8f9fa;
+        overflow-x: hidden;
+        overscroll-behavior-y: none;
+      }
+      .animate-fade-in, .animate-slide-up, .transform {
+        will-change: transform, opacity;
+        transform: translateZ(0);
+      }
+      .pattern-bg {
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c59d5f' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      }
+      .dark .pattern-bg {
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c59d5f' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      }
+      .glass {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      }
+      .dark .glass {
+        background: rgba(15, 23, 42, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      .voice-bar {
+        width: 4px;
+        background: #c59d5f;
+        border-radius: 2px;
+        animation: wave 1s ease-in-out infinite;
+      }
+      .voice-bar:nth-child(1) { animation-duration: 0.8s; }
+      .voice-bar:nth-child(2) { animation-duration: 1.1s; }
+      .voice-bar:nth-child(3) { animation-duration: 1.3s; }
+      .voice-bar:nth-child(4) { animation-duration: 0.9s; }
+      .voice-bar:nth-child(5) { animation-duration: 1.2s; }
+      ::-webkit-scrollbar { width: 6px; height: 6px; }
+      ::-webkit-scrollbar-track { background: transparent; }
+      ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+      ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+      .dark ::-webkit-scrollbar-thumb { background: #4b5563; }
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "@netlify/edge-functions": "https://aistudiocdn.com/@netlify/edge-functions@^3.0.2",
+    "zustand": "https://aistudiocdn.com/zustand@^5.0.3",
+    "zustand/middleware": "https://aistudiocdn.com/zustand@^5.0.3/middleware",
+    "zustand/": "https://aistudiocdn.com/zustand@^5.0.9/",
+    "@supabase/supabase-js": "https://aistudiocdn.com/@supabase/supabase-js@^2.87.1"
+  }
+}
+</script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-customGray dark:bg-darkBg font-sans text-gray-800 dark:text-gray-100 transition-colors duration-500 antialiased overflow-x-hidden pattern-bg selection:bg-secondary selection:text-primary">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+    <script>
+      // Safe Service Worker Registration
+      // This block is designed to FAIL SILENTLY if the environment (like AI Studio preview)
+      // blocks Service Workers due to cross-origin or iframe sandboxing policies.
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+              console.log('SW registered successfully:', registration.scope);
+            })
+            .catch(err => {
+              // Intentionally just log the warning and do NOT alert the user.
+              // This allows the app UI to render even if PWA features are blocked by the host.
+              console.warn('SW registration failed (likely due to preview environment):', err);
+            });
+        });
+      }
+    </script>
+  </body>
+</html>

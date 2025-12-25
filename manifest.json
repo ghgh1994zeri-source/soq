@@ -1,0 +1,55 @@
+
+{
+  "name": "الوسيط - سوريا | سوقك المفتوح",
+  "short_name": "الوسيط",
+  "description": "أكبر سوق مفتوح في سوريا للبيع والشراء.",
+  "start_url": "/",
+  "id": "alwaseet_syria_app_v2",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#002f34",
+  "theme_color": "#002f34",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://i.ibb.co/27Qv2BfV/Screenshot-2025-12-09-142509.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://i.ibb.co/27Qv2BfV/Screenshot-2025-12-09-142509.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "https://i.ibb.co/27Qv2BfV/Screenshot-2025-12-09-142509.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://i.ibb.co/27Qv2BfV/Screenshot-2025-12-09-142509.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "https://images.unsplash.com/photo-1556742049-0cfed4f7a07d?auto=format&fit=crop&w=800&q=80",
+      "sizes": "800x600",
+      "type": "image/jpeg",
+      "form_factor": "wide",
+      "label": "الرئيسية"
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1556742049-0cfed4f7a07d?auto=format&fit=crop&w=400&q=80",
+      "sizes": "400x800",
+      "type": "image/jpeg",
+      "form_factor": "narrow",
+      "label": "الجوال"
+    }
+  ]
+}
