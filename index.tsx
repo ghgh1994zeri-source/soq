@@ -15,7 +15,7 @@ const root = ReactDOM.createRoot(rootElement);
 /**
  * التحقق من وجود مفتاح الـ API.
  * ملاحظة: في بيئة الإنتاج على Netlify، يتم حقن هذا المفتاح تلقائياً 
- * فقط إذا كان الموقع مربوطاً بـ GitHub وتم تعريف المتغير في Settings.
+ * فقط إذا تم تعريف المتغير 'API_KEY' في إعدادات الموقع.
  */
 const apiKey = process.env.API_KEY;
 const isApiKeyMissing = !apiKey || apiKey === 'undefined';
@@ -31,7 +31,7 @@ root.render(
           textAlign: 'center', fontSize: '12px', fontWeight: 'bold',
           boxShadow: '0 -4px 20px rgba(0,0,0,0.3)', direction: 'rtl', fontFamily: 'sans-serif'
         }}>
-          ⚠️ تنبيه: مفتاح الـ API غير متاح حالياً. يرجى ربط الموقع بـ GitHub لضمان حقن المتغيرات بشكل صحيح.
+          ⚠️ تنبيه للنظام: مفتاح الـ API غير متاح حالياً في بيئة التشغيل. يرجى إضافته كـ (API_KEY) في لوحة تحكم Netlify.
         </div>
       )}
     </ErrorBoundary>
